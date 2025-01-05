@@ -1,56 +1,185 @@
 import User from "../models/user.model.js";
+import speakeasy from "speakeasy";
+import qrcode from "qrcode";
+import jwt from "jsonwebtoken";
 
-export const registerUser =async(req,res)=>{
+export const registerUser = async (req, res) => {
     try {
-        const {userName,password}=req.body;
+        const { userName, password } = req.body;
 
-        
+        // Validate user input
+        if (!userName?.trim() || !password?.trim()) {
+            return res.status(400).json({ message: "Username and password are required." });
+        }
 
-        //check whether req body has values in it or not
-        if([userName,password].some((field)=>field?.trim ==="")) return res.status(400).json({message:"The client sent invalid or incomplete data"});
+        // Check if user already exists
+        const isExistingUser = await User.findOne({ userName });
+        if (isExistingUser) {
+            return res.status(409).json({ message: "Username is already taken. Please choose another one." });
+        }
 
-       
-
-        const isExistingUSer = await User.findOne({userName});
-       
-        
-
-        //check whether user exist already or not
-        if(isExistingUSer) return res.status(409).json({message:`Username ${userName} exists in the database.`})
-
-           
-
+        // Create a new user
         const newUser = new User({
-           userName,
-           password,
-           isMfaActive:false,
+            userName,
+            password,
+            isMfaActive: false,
         });
 
-        
-       
         await newUser.save();
 
-        
-          return res.status(201).json({ 
-            message: "User registered successfully", 
+        return res.status(201).json({ 
+            message: "User registered successfully.", 
             user: { id: newUser._id, userName: newUser.userName } 
         });
 
     } catch (error) {
-        res.status(500).json({error:"Error registering user",message:error});
+        console.error("Registration Error:", error); // Log for internal debugging
+        res.status(500).json({ message: "An unexpected error occurred. Please try again later." });
     }
-}
+};
 
 
-export const loginUser =async(req,res)=>{
-    console.log("req user",req.user);
-    return res.status(201).json({ 
-        message: "User logged in  successfully", 
-        user: { id: req.user._id, userName: req.user.userName ,isMfaActive:req.user.isMfaActive} 
+
+export const loginUser = async (req, res) => {
+    try {
+        const refreshToken = await req.user.generateRefreshToken();
+        req.user.refreshToken = refreshToken; // Save refreshToken in the user's document
+
+        await req.user.save();
+
+        // Set refresh token in an HTTP-only cookie
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Secure in production
+            sameSite: 'Strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        });
+
+        return res.status(200).json({ 
+            message: "Login successful.", 
+            user: { id: req.user._id, userName: req.user.userName, isMfaActive: req.user.isMfaActive } 
+        });
+    } catch (error) {
+        console.error("Login Error:", error);
+        return res.status(500).json({ message: "An unexpected error occurred." });
+    }
+};
+
+export const regenerateSession = async (req, res) => {
+   
+};
+
+
+
+// Express.Request.logout(options: passport.LogOutOptions, done: (err: any) => void): void
+
+// Terminate an existing login session.
+export const logoutUser = async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ message: "You are not logged in." });
+    }
+
+    req.logout((err) => {
+        if (err) {
+            console.error("Logout Error:", err);
+            return res.status(500).json({ message: "Failed to log out. Please try again." });
+        }
+        res.status(200).json({ message: "You have been logged out successfully." });
     });
-}
-export const authStatus =async()=>{}
-export const logoutUser =async()=>{}
-export const setup2fa =async()=>{}
-export const verify2fa =async()=>{}
-export const reset2fa =async()=>{}
+};
+
+export const setup2fa = async (req, res) => {
+    try {
+      const user = req.user;
+  
+      // Ensure the user is authenticated
+      if (!user) {
+        return res.status(401).json({ message: "User not authenticated" });
+      }
+  
+      // Check if 2FA is already active for the user
+      if (user.isMfaActive) {
+        return res.status(400).json({ message: "2FA is already active" });
+      }
+  
+      // Generate a new 2FA secret
+      const secret = speakeasy.generateSecret();
+  
+      user.twoFactorSecret = secret.base32;
+      user.isMfaActive = true;
+  
+      await user.save();
+  
+      // Generate the OTP Auth URL
+      const url = speakeasy.otpauthURL({
+        secret: secret.base32,
+        label: user.userName, 
+        issuer: "DSAForge",
+        encoding: "base32",
+      });
+  
+      // Generate the QR code image URL
+      const qrImageUrl = await qrcode.toDataURL(url);
+  
+      res.status(200).json({ qrcode: qrImageUrl });
+    } catch (error) {
+      console.error("Setup 2FA Error:", error); // Log error details for internal debugging
+      res.status(500).json({ message: "An unexpected error occurred. Please try again later." });
+    }
+  };
+  
+
+export const verify2fa = async (req, res) => {
+    try {
+        const { token } = req.body; // OTP generated by the authenticator app
+        const user = req.user;
+
+        // Validate the token
+        if (!token || token.length === 0) {
+            return res.status(400).json({ message: "Token is required" });
+        }
+
+        const verified = speakeasy.totp.verify({
+            secret: user.twoFactorSecret,
+            encoding: "base32",
+            token,
+            window: 6, // Allows a 6-step time window to handle slight delays
+        });
+
+        if (verified) {
+            // Generate a JWT token for authenticated user
+            const jwtToken = jwt.sign(
+                { userName: user.userName },
+                process.env.JWT_SECRET,
+                { expiresIn: "3h" }
+            );
+            return res.status(200).json({
+                message: "2FA verified successfully",
+                token: jwtToken,
+            });
+        } else {
+            return res.status(401).json({ message: "Invalid token" });
+        }
+    } catch (error) {
+        console.error("Verify 2FA Error:", error); // Log for internal debugging
+        res.status(500).json({ message: "An unexpected error occurred. Please try again later." });
+    }
+};
+
+export const reset2fa = async (req, res) => {
+    try {
+        const user = req.user;
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.twoFactorSecret = ""; // Clear 2FA secret
+        user.isMfaActive = false; // Disable 2FA
+        await user.save();
+
+        return res.status(200).json({ message: "2FA has been reset" });
+    } catch (error) {
+        console.error("Reset 2FA Error:", error); // Log for internal debugging
+        res.status(500).json({ message: "An unexpected error occurred. Please try again later." });
+    }
+};

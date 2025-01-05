@@ -22,6 +22,21 @@ passport.use(new LocalStrategy(
     }
   ));
 
+
+  //SerializeUser saves the user ID in the session cookie
+
   passport.serializeUser((user, done) => {
+   
     done(null, user._id);
 });
+
+//DeserializeUser retrieves the user from the database using that ID for every request.
+passport.deserializeUser(async(_id,done)=>{
+  
+   try {
+      const user = await User.findById(_id);
+      done(null,user);
+   } catch (error) {
+      done(error);
+   }
+})

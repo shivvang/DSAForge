@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema({
     userName:{
@@ -10,6 +11,9 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true,
+    },
+    refreshToken:{
+        type:String,    
     },
     isMfaActive:{
         type:Boolean,
@@ -34,7 +38,6 @@ userSchema.pre("save",async function (next){
 
    // Check if the password field is modified
    if (!this.password || !this.isModified("password")) {
-       console.log("Password not modified, skipping hashing.");
        return next();
    }
 
@@ -49,6 +52,16 @@ userSchema.pre("save",async function (next){
 
 
 })
+
+userSchema.methods.generateRefreshToken = async function(){
+return jwt.sign(
+    {_id:this._id},
+    process.env.REFRESH_TOKEN,
+    {
+        expiresIn:process.env.REFRESH_TOKEN_EXPIRY
+    }
+  )
+}
 
 const User = mongoose.model("User",userSchema);
 export default User;
