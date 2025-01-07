@@ -42,15 +42,23 @@ const globalRateLimiter  = new RateLimiterRedis({
 });
 
 
+//new error learned beacuse i kept res.status(429) outside the catch block 
+//which lead to this middleware being called over and over agian creatiing multiple res.status().json()
+//The error ERR_HTTP_HEADERS_SENT happens when you're trying to send a response to the client more than once in the same request lifecycle. 
+// This commonly occurs in scenarios involving middleware, error handlers, or rate limiters.
 
-app.use((req,res,next)=>{
-    globalRateLimiter.consume(req.ip).then(()=>next()).catch((err)=>logger.warn(`Rate limit exceeded for Ip: ${req.ip}`));
+app.use((req, res, next) => {
+    globalRateLimiter.consume(req.ip)
+        .then(() => next())
+        .catch((err) => {
+            logger.warn(`Rate limit exceeded for IP: ${req.ip}`);
+            res.status(429).json({
+                success: false,
+                message: "too many requests"
+            });
+        });
+});
 
-res.status(429).json({
-    success:false,
-    message:"too many request"
-})
-})
 
 
 // Sensitive Route Rate Limiting

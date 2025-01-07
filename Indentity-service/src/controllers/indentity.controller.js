@@ -35,8 +35,10 @@ export const registerUser = async(req,res)=>{
 
         logger.warn("user saved successfully",user._id);
 
-        const {accesstoken,refreshtoken} = generateTokens(user);
+        //forgot to add await here this was the reason why i didnt got them i the first place now on to other routes
+        const {accesstoken,refreshtoken} = await generateTokens(user);
 
+        console.log("am i getting both this here or not",accesstoken,refreshtoken);
         res.status(201).json({
             success:true,
             message:"user registered successfully",
