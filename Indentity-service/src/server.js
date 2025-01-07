@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import logger from "./utils/logger.js";
 import express from "express";
 import helmet from "helmet";
+import cookieparser from "cookie-parser";
 import cors from "cors";
 import  { RateLimiterRedis } from "rate-limiter-flexible";
 import ratelimit from "express-rate-limit";
@@ -22,6 +23,7 @@ const cacheClient = new Redis(process.env.REDIS_URL);
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
+app.use(cookieparser());
 
 app.use((req,res,next)=>{
     logger.info(`Recieved ${req.method} request to ${req.url}`);

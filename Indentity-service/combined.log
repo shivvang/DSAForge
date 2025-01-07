@@ -99,3 +99,52 @@
 {"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T06:48:53.372Z"}
 {"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T06:49:45.173Z"}
 {"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T06:49:47.738Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T09:43:50.531Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T09:43:55.276Z"}
+{"0":"r","1":"e","2":"a","3":"s","4":"o","5":"n","level":"error","message":"unhandled Rejection at","service":"identity-service","timestamp":"2025-01-07T09:44:01.395Z"}
+{"0":"r","1":"e","2":"a","3":"s","4":"o","5":"n","level":"error","message":"unhandled Rejection at","service":"identity-service","timestamp":"2025-01-07T09:44:01.398Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T12:11:24.373Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T12:11:25.779Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/register","service":"identity-service","timestamp":"2025-01-07T12:14:48.356Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-07T12:14:48.358Z"}
+{"level":"info","message":"Registeration endpoint hit...","service":"identity-service","timestamp":"2025-01-07T12:14:48.373Z"}
+{"level":"warn","message":"user already exist","service":"identity-service","timestamp":"2025-01-07T12:14:48.511Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/register","service":"identity-service","timestamp":"2025-01-07T12:15:41.252Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-07T12:15:41.254Z"}
+{"level":"info","message":"Registeration endpoint hit...","service":"identity-service","timestamp":"2025-01-07T12:15:41.260Z"}
+{"buffer":{"data":[103,125,26,237,36,197,52,134,238,95,236,87],"type":"Buffer"},"level":"warn","message":"user saved successfully","service":"identity-service","timestamp":"2025-01-07T12:15:41.692Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T12:16:35.266Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T12:16:36.902Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T12:17:15.218Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T12:17:16.183Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T18:08:09.015Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T18:08:10.109Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T18:08:58.226Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T18:08:58.922Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/register","service":"identity-service","timestamp":"2025-01-07T18:10:14.345Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-07T18:10:14.345Z"}
+{"level":"info","message":"Registeration endpoint hit...","service":"identity-service","timestamp":"2025-01-07T18:10:14.349Z"}
+{"buffer":{"data":[103,125,110,6,16,74,206,178,98,75,106,34],"type":"Buffer"},"level":"warn","message":"user saved successfully","service":"identity-service","timestamp":"2025-01-07T18:10:14.725Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/login","service":"identity-service","timestamp":"2025-01-07T18:10:31.783Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-07T18:10:31.783Z"}
+{"level":"info","message":"Login user endpoint hit...","service":"identity-service","timestamp":"2025-01-07T18:10:31.785Z"}
+{"0":"\"","1":"u","10":" ","11":"i","12":"s","13":" ","14":"n","15":"o","16":"t","17":" ","18":"a","19":"l","2":"s","20":"l","21":"o","22":"w","23":"e","24":"d","3":"e","4":"r","5":"n","6":"a","7":"m","8":"e","9":"\"","level":"warn","message":"Validation error","service":"identity-service","timestamp":"2025-01-07T18:10:31.787Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/login","service":"identity-service","timestamp":"2025-01-07T18:12:40.849Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-07T18:12:40.850Z"}
+{"level":"info","message":"Login user endpoint hit...","service":"identity-service","timestamp":"2025-01-07T18:12:40.851Z"}
+{"level":"error","message":"Login error occured User.comparePassword is not a function","service":"identity-service","stack":"TypeError: User.comparePassword is not a function\n    at LoginUser (file:///C:/Dsa_note_Keeper/Indentity-service/src/controllers/indentity.controller.js:83:42)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-01-07T18:12:40.969Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T18:13:51.988Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T18:13:53.561Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/login","service":"identity-service","timestamp":"2025-01-07T18:14:10.589Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-07T18:14:10.590Z"}
+{"level":"info","message":"Login user endpoint hit...","service":"identity-service","timestamp":"2025-01-07T18:14:10.592Z"}
+{"level":"error","message":"Login error occured User.comparePassword is not a function","service":"identity-service","stack":"TypeError: User.comparePassword is not a function\n    at LoginUser (file:///C:/Dsa_note_Keeper/Indentity-service/src/controllers/indentity.controller.js:83:42)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-01-07T18:14:10.664Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T18:26:31.261Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T18:26:33.110Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/login","service":"identity-service","timestamp":"2025-01-07T18:26:38.925Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-07T18:26:38.926Z"}
+{"level":"info","message":"Login user endpoint hit...","service":"identity-service","timestamp":"2025-01-07T18:26:38.929Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T18:32:47.206Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T18:32:48.615Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-07T18:34:16.521Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-07T18:34:17.616Z"}

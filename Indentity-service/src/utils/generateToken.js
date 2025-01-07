@@ -8,12 +8,12 @@ const generateTokens = async(user)=>{
     const accesstoken = jwt.sign({
         userId:user._id,
         userName:user.username,
-    },process.env.JWT_SECRET,{expiresIn:'60m'})
+    },process.env.JWT_SECRET,{expiresIn:'120m'})
 
    
     const refreshtoken = crypto.randomBytes(40).toString("hex");
 
-    console.log("what is this guys problem",refreshtoken);
+
 
     const expiresIn = new Date();
 
