@@ -22,7 +22,6 @@ const validatetoken = async (req, res, next) => {
     // If valid, attach user info to the request and move to the next middleware
     req.user = decoded;
 
-    console.log("wtf is this decode is containing in it",decoded);
     
     logger.info(`User validated successfully. User ID: ${decoded.userId}`);
 
