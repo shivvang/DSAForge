@@ -12,7 +12,7 @@ export const registerUser = async(req,res)=>{
         const {error} = validateRegisteration(req.body);
 
         if(error) {
-            logger.warn("Validation error",error.details[0].message);
+            logger.warn("Validation error at registering user",error.details[0].message);
             return res.status(400).json({
                 success:false,
                 message: error.details[0].message
@@ -63,7 +63,7 @@ export const LoginUser = async(req,res)=>{
         const {error} = validateLogin(req.body);
 
         if(error){
-            logger.warn("Validation error",error.details[0].message);
+            logger.warn("Validation error at logging user",error.details[0].message);
             return res.status(400).json({
                 success:false,
                 message: error.details[0].message

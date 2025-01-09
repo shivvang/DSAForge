@@ -3,9 +3,10 @@ import logger from '../utils/logger.js';
 
 // Middleware function to validate token
 const validatetoken = async (req, res, next) => {
-  const token = req.cookies.accessToken; 
+  
+  const token = req.cookies?.accessToken; 
 
-  logger.info("Validating user before hitting sensitive endpoints");
+  logger.info("Validating user at api gateway before hitting sensitive endpoints");
 
   if (!token) {
     logger.warn("User doesn't have an access token.");
@@ -26,8 +27,8 @@ const validatetoken = async (req, res, next) => {
     logger.info(`User validated successfully. User ID: ${decoded.userId}`);
 
     next();
+
   } catch (error) {
-    // Log detailed error for debugging
     if (error instanceof jwt.TokenExpiredError) {
       logger.warn("Access token has expired");
     } else if (error instanceof jwt.JsonWebTokenError) {

@@ -374,3 +374,25 @@
 {"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-08T13:45:24.475Z"}
 {"level":"info","message":"🔄 Password renewal endpoint hit...","service":"identity-service","timestamp":"2025-01-08T13:45:24.476Z"}
 {"level":"warn","message":"❌ Refresh token missing, unable to proceed.","service":"identity-service","timestamp":"2025-01-08T13:45:24.477Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-09T07:48:25.591Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-09T07:48:29.065Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/login","service":"identity-service","timestamp":"2025-01-09T07:49:32.154Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-09T07:49:32.155Z"}
+{"level":"info","message":"Login user endpoint hit...","service":"identity-service","timestamp":"2025-01-09T07:49:32.158Z"}
+{"buffer":{"data":[103,126,78,146,199,197,18,216,53,74,159,177],"type":"Buffer"},"level":"warn","message":"user logged in successfully","service":"identity-service","timestamp":"2025-01-09T07:49:32.335Z"}
+{"level":"info","message":"Recieved GET request to /api/auth/login","service":"identity-service","timestamp":"2025-01-09T07:57:09.722Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-09T07:57:09.723Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/login","service":"identity-service","timestamp":"2025-01-09T07:57:18.097Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-09T07:57:18.098Z"}
+{"level":"info","message":"Login user endpoint hit...","service":"identity-service","timestamp":"2025-01-09T07:57:18.099Z"}
+{"buffer":{"data":[103,126,78,146,199,197,18,216,53,74,159,177],"type":"Buffer"},"level":"warn","message":"user logged in successfully","service":"identity-service","timestamp":"2025-01-09T07:57:18.763Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-09T09:33:19.977Z"}
+{"code":"ECONNREFUSED","hostname":"_mongodb._tcp.cluster0.zewnqrf.mongodb.net","level":"error","message":"Mongo db connection querySrv ECONNREFUSED _mongodb._tcp.cluster0.zewnqrf.mongodb.net","service":"identity-service","stack":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.zewnqrf.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)","syscall":"querySrv","timestamp":"2025-01-09T09:33:19.999Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-09T09:34:13.608Z"}
+{"code":"ECONNREFUSED","hostname":"_mongodb._tcp.cluster0.zewnqrf.mongodb.net","level":"error","message":"Mongo db connection querySrv ECONNREFUSED _mongodb._tcp.cluster0.zewnqrf.mongodb.net","service":"identity-service","stack":"Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.zewnqrf.mongodb.net\n    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)","syscall":"querySrv","timestamp":"2025-01-09T09:34:13.658Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-09T09:34:58.094Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-09T09:34:59.585Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/login","service":"identity-service","timestamp":"2025-01-09T09:41:15.113Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-09T09:41:15.115Z"}
+{"level":"info","message":"Login user endpoint hit...","service":"identity-service","timestamp":"2025-01-09T09:41:15.126Z"}
+{"buffer":{"data":[103,126,78,146,199,197,18,216,53,74,159,177],"type":"Buffer"},"level":"warn","message":"user logged in successfully","service":"identity-service","timestamp":"2025-01-09T09:41:15.499Z"}

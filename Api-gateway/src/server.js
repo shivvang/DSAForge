@@ -9,6 +9,8 @@ import  {rateLimit} from "express-rate-limit";
 import logger from "./utils/logger.js"
 import proxy from "express-http-proxy"
 import errorHandler from "./middleware/errorHandler.js";
+import validatetoken from "./middleware/authenticateUser.js";
+import cookieparser  from "cookie-parser";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -18,6 +20,7 @@ const cacheClient = new Redis(process.env.REDIS_URL);
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(cookieparser());
 
 // rateLimit is a function from a library like express-rate-limit, used to limit the number of requests that a client (identified by IP) 
 // can make to an API within a certain time window.
@@ -146,6 +149,7 @@ const proxyOptions = {
     }
 }
 
+//identity service proxy
 app.use("/v1/auth",proxy(process.env.IDENTITY_SERVICE_URL,{
     ...proxyOptions,
     proxyReqOptDecorator:(proxyReqOpts,srcReq)=>{
@@ -158,10 +162,25 @@ app.use("/v1/auth",proxy(process.env.IDENTITY_SERVICE_URL,{
     }
 }))
 
+//problem service proxy
+app.use("/v1/problem",validatetoken,proxy(process.env.PROBLEM_SERVICE_URL,{
+    ...proxyOptions,
+    proxyReqOptDecorator:(proxyReqOpts,srcReq)=>{
+        proxyReqOpts.headers["Content-Type"] = "application/json",
+        proxyReqOpts.headers["x-user-id"] = srcReq.user.userId
+        return proxyReqOpts;
+    },
+    userResDecorator:(proxyRes,proxyResData,userReq,userRes)=>{
+        logger.info(`Response received from Problem services : ${proxyRes.statusCode}`)
+        return proxyResData;
+    }
+}))
+
 app.use(errorHandler);
 
 app.listen(PORT,()=>{
     logger.info(`Api Gateway is running on port ${PORT}`);
     logger.info(`Identity service running on  ${process.env.IDENTITY_SERVICE_URL}`);
+    logger.info(`Problem service running on  ${process.env.PROBLEM_SERVICE_URL}`);
     logger.info(`Redis is running on  ${process.env.REDIS_URL}`);
 })
