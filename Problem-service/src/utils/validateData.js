@@ -65,3 +65,47 @@ export const validateCreateProblem = (data) => {
 
   return schema.validate(data);
 };
+
+
+export const validateUpdateProblem = (data) => {
+  const schema = Joi.object({
+      title: Joi.string()
+          .min(3)
+          .max(100)
+          .messages({
+              "string.base": `"title" must be a string`,
+              "string.min": `"title" must be at least {#limit} characters long`,
+              "string.max": `"title" must be at most {#limit} characters long`,
+          }),
+      description: Joi.string()
+          .min(10)
+          .max(1000)
+          .messages({
+              "string.base": `"description" must be a string`,
+              "string.min": `"description" must be at least {#limit} characters long`,
+              "string.max": `"description" must be at most {#limit} characters long`,
+          }),
+      datastructure: Joi.string()
+          .messages({
+              "string.base": `"datastructure" must be a string`,
+          }),
+      algorithm: Joi.string()
+          .messages({
+              "string.base": `"algorithm" must be a string`,
+          }),
+      sourcelink: Joi.string()
+          .uri()
+          .messages({
+              "string.base": `"sourcelink" must be a string`,
+              "string.uri": `"sourcelink" must be a valid URL`,
+          }),
+      notes: Joi.string()
+          .max(500)
+          .messages({
+              "string.base": `"notes" must be a string`,
+              "string.max": `"notes" must be at most {#limit} characters long`,
+          }),
+  });
+
+  return schema.validate(data);
+};

@@ -31,6 +31,8 @@ const ProblemSchema = new mongoose.Schema({
     timestamps:true,
 });
 
+ProblemSchema.index({title:"text"});
+
 const Problem = mongoose.model("Problem",ProblemSchema);
 
 export default Problem;
