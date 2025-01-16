@@ -9,6 +9,7 @@ import errorHandler from "./middleware/errorHandler.js";
 import logger from "./utils/logger.js";
 import Redis from "ioredis";
 import cookieParser from "cookie-parser";
+import {initializeRabbitMQ} from "./utils/rabbitmq.js";
 
 const app = express();
 const PORT = process.env.PORT || 8002;
@@ -37,9 +38,24 @@ app.use("/api/problem",(req,res,next)=>{
 
 app.use(errorHandler);
 
-app.listen(PORT,()=>{
-    logger.info(`Problem service running on port ${PORT}`);
-})
+async function launchProblemService() {
+    try {
+        // Initialize RabbitMQ connection
+        await initializeRabbitMQ();
+        // Start the Express server
+        app.listen(PORT, () => {
+            logger.info(`🚀 Problem Service is live at http://localhost:${PORT}`);
+        });
+
+    } catch (error) {
+        logger.error("❌ Critical Error: Failed to launch Problem Service.", error);
+        process.exit(1); // Exit the process if the server fails to start
+    }
+}
+
+// Start the service
+launchProblemService();
+
 
 process.on("unhandledRejection",(reason,promise)=>{
     logger.error("unhandled Rejection at",promise,"reason",reason);

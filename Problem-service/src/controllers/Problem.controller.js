@@ -1,6 +1,7 @@
 import Problem from "../models/Problem.model.js";
 import { deleteCachedKeys } from "../utils/deleteCachedKeys.js";
 import logger from "../utils/logger.js";
+import { publishEventToExchange } from "../utils/rabbitmq.js";
 import { validateCreateProblem, validateUpdateProblem } from "../utils/validateData.js";
 
 
@@ -38,6 +39,12 @@ export const createProblem = async(req,res)=>{
        //delete previously paginated cached results
 
        await deleteCachedKeys(req.cacheClient, "problems:*");
+
+      // Notify other services about the newly created problem
+        await publishEventToExchange('problem.new', {
+            id: newlyCreatedProblem._id.toString(),
+            authorId:user.toString(),
+        });
 
        return res.status(201).json({
          success: true,
@@ -187,6 +194,13 @@ export const deleteProblem = async (req, res) => {
                 message: `Problem with ID ${problemId} not found.`,
             });
         }
+
+        // Notify other services about the  deleted problem
+        await publishEventToExchange('problem.deleted', {
+        id: problem._id.toString(),
+        authorId:req.body.user.toString(),
+        });
+    
 
         // Delete the problem from the database
         await problem.deleteOne({"_id": problem._id});

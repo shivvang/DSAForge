@@ -1,13 +1,12 @@
 import Review from "../models/Review.model.js";
 import logger from "../utils/logger.js";
-
-const Joi = require("joi");
+import Joi from "joi";
 
 export const setReview = async (req, res) => {
     logger.info("Set Review endpoint hit.");
 
     try {
-        const { userId } = req.user;
+        const userId  = req.user;
         const problemId = req.query.problemId;
 
         if (!userId) {
@@ -84,42 +83,14 @@ export const setReview = async (req, res) => {
     }
 };
 
-
+import mongoose from "mongoose";
 export const fetchDueProblems = async (req, res) => {
     logger.info("Fetch due review endpoint hit.");
 
     try {
-        // Find due reviews
+       await Review.deleteOne({ _id:new mongoose.Types.ObjectId("6789504d77e44d9954eb2ef4") });
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); 
-
-        const dueReviews = await Review.find({ nextReviewTime: today }).populate("user problem");
-
-        if (!dueReviews.length) {
-            logger.warn("No due reviews found.");
-            return res.status(404).json({ success: false, message: "No due reviews found." });
-        }
-
-        // Send emails for each review
-        
-        for (const review of dueReviews) {
-            const userEmail = review.user.email; 
-            const problem = review.problem; 
-
-            const subject = "Chief, you're supposed to revise this problems!";
-            const body = {
-                problemTitle: problem.title,
-                problemDescription: problem.description,
-            };
-
-            await sendMail("your-email@example.com", userEmail, subject, body);
-
-            Review.deleteOne(review);
-        }
-
-        logger.info("Emails sent for all due reviews.");
-        return res.status(200).json({ success: true, message: "Emails sent for due reviews." });
+        res.status(200).json({message:"deleted successfully"})
     } catch (error) {
         logger.error("Error fetching due reviews:", error);
         return res.status(500).json({

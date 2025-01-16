@@ -4,11 +4,13 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import helmet from "helmet";
-import reviwRouter  from "./rotues/review.router.js"
+import reviewRouter  from "./rotues/review.router.js"
 import errorHandler from "./middleware/errorHandler.js";
 import logger from "./utils/logger.js";
 import cookieParser from "cookie-parser";
-import startCronJob from "./service/cronJob.js";
+import { initializeRabbitMQ } from "../../Problem-service/src/utils/rabbitmq.js";
+import { consumeEvents } from "./utils/rabbitmq.js";
+import {handleProblemDeletion} from "./eventHandlers/handleEvent.js"
 
 const app = express();
 const PORT = process.env.PORT || 8003;
@@ -29,8 +31,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Start the cron job
-startCronJob();
 
 // Routes
 app.use("/api/review", reviewRouter);
@@ -38,9 +38,30 @@ app.use("/api/review", reviewRouter);
 // Global error handler
 app.use(errorHandler);
 
-app.listen(PORT,()=>{
-    logger.info(`Review service running on port ${PORT}`);
-})
+
+async function launchReviewService() {
+    try {
+        // Initialize RabbitMQ connection
+        await initializeRabbitMQ();
+
+
+        await consumeEvents('problem.deleted',handleProblemDeletion);
+
+
+        // Start the Express server
+        app.listen(PORT, () => {
+            logger.info(`🚀 Review Service is live at http://localhost:${PORT}`);
+        });
+
+    } catch (error) {
+        logger.error("❌ Critical Error: Failed to launch Problem Service.", error);
+        process.exit(1); // Exit the process if the server fails to start
+    }
+}
+
+// Start the service
+launchReviewService();
+
 
 process.on("unhandledRejection",(reason,promise)=>{
     logger.error("unhandled Rejection at",promise,"reason",reason);

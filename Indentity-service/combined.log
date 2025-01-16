@@ -412,3 +412,15 @@
 {"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-10T06:26:08.271Z"}
 {"level":"info","message":"renew acess token endpoint  is hit","service":"identity-service","timestamp":"2025-01-10T06:26:08.286Z"}
 {"level":"warn","message":"ReCreated User's Access token","service":"identity-service","timestamp":"2025-01-10T06:26:08.304Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-16T13:18:47.810Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-16T13:18:49.352Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/login","service":"identity-service","timestamp":"2025-01-16T13:19:02.641Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-16T13:19:02.643Z"}
+{"level":"info","message":"Login user endpoint hit...","service":"identity-service","timestamp":"2025-01-16T13:19:02.662Z"}
+{"buffer":{"data":[103,126,78,146,199,197,18,216,53,74,159,177],"type":"Buffer"},"level":"warn","message":"user logged in successfully","service":"identity-service","timestamp":"2025-01-16T13:19:03.085Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-16T18:09:43.576Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-16T18:09:45.507Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/renewAccessToken","service":"identity-service","timestamp":"2025-01-16T18:15:51.010Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-16T18:15:51.012Z"}
+{"level":"info","message":"renew acess token endpoint  is hit","service":"identity-service","timestamp":"2025-01-16T18:15:51.022Z"}
+{"level":"warn","message":"ReCreated User's Access token","service":"identity-service","timestamp":"2025-01-16T18:15:51.043Z"}

@@ -26,6 +26,8 @@ const ReviewSchema = new mongoose.Schema({
     },
 });
 
+//TTL (time to live) Index deletes documents automatically after nextReviewTime is reached.
+ReviewSchema.index({ nextReviewTime: 1 }, { expireAfterSeconds: 0 });
 
 const Review = mongoose.model("Review",ReviewSchema);
 
