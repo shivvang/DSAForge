@@ -424,3 +424,19 @@
 {"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-16T18:15:51.012Z"}
 {"level":"info","message":"renew acess token endpoint  is hit","service":"identity-service","timestamp":"2025-01-16T18:15:51.022Z"}
 {"level":"warn","message":"ReCreated User's Access token","service":"identity-service","timestamp":"2025-01-16T18:15:51.043Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-17T06:51:30.312Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-17T06:51:31.427Z"}
+{"0":"r","1":"e","2":"a","3":"s","4":"o","5":"n","level":"error","message":"unhandled Rejection at","service":"identity-service","timestamp":"2025-01-17T06:51:41.093Z"}
+{"0":"r","1":"e","2":"a","3":"s","4":"o","5":"n","level":"error","message":"unhandled Rejection at","service":"identity-service","timestamp":"2025-01-17T06:51:41.095Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-17T06:54:19.069Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-17T06:54:20.498Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/renewAccessToken","service":"identity-service","timestamp":"2025-01-17T06:54:28.678Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-17T06:54:28.680Z"}
+{"level":"info","message":"renew acess token endpoint  is hit","service":"identity-service","timestamp":"2025-01-17T06:54:28.691Z"}
+{"level":"warn","message":"ReCreated User's Access token","service":"identity-service","timestamp":"2025-01-17T06:54:28.708Z"}
+{"level":"info","message":"Identity service running on port 7001","service":"identity-service","timestamp":"2025-01-17T09:59:24.691Z"}
+{"level":"info","message":"Connected to Mongo Db","service":"identity-service","timestamp":"2025-01-17T09:59:26.137Z"}
+{"level":"info","message":"Recieved POST request to /api/auth/renewAccessToken","service":"identity-service","timestamp":"2025-01-17T09:59:31.905Z"}
+{"level":"info","message":"Request Body , [object Object]","service":"identity-service","timestamp":"2025-01-17T09:59:31.907Z"}
+{"level":"info","message":"renew acess token endpoint  is hit","service":"identity-service","timestamp":"2025-01-17T09:59:31.918Z"}
+{"level":"warn","message":"ReCreated User's Access token","service":"identity-service","timestamp":"2025-01-17T09:59:31.934Z"}

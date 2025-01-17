@@ -178,18 +178,7 @@ app.use("/v1/problem",validatetoken,proxy(process.env.PROBLEM_SERVICE_URL,{
 
 
 //review service proxy
-app.use("/v1/review",validatetoken,proxy(process.env.REVIEW_SERVICE_URL,{
-    ...proxyOptions,
-    proxyReqOptDecorator:(proxyReqOpts,srcReq)=>{
-        proxyReqOpts.headers["Content-Type"] = "application/json",
-        proxyReqOpts.headers["x-user-id"] = srcReq.user.userId
-        return proxyReqOpts;
-    },
-    userResDecorator:(proxyRes,proxyResData,userReq,userRes)=>{
-        logger.info(`Response received from Review services : ${proxyRes.statusCode}`)
-        return proxyResData;
-    }
-}))
+
 
 app.use(errorHandler);
 
@@ -197,6 +186,5 @@ app.listen(PORT,()=>{
     logger.info(`Api Gateway is running on port ${PORT}`);
     logger.info(`Identity service running on  ${process.env.IDENTITY_SERVICE_URL}`);
     logger.info(`Problem service running on  ${process.env.PROBLEM_SERVICE_URL}`);
-    logger.info(`Review service running on  ${process.env.REVIEW_SERVICE_URL}`);
     logger.info(`Redis is running on  ${process.env.REDIS_URL}`);
 })
