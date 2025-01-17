@@ -7,7 +7,6 @@ import helmet from "helmet";
 import problemRouter  from "./rotues/problem.router.js";
 import errorHandler from "./middleware/errorHandler.js";
 import logger from "./utils/logger.js";
-import Redis from "ioredis";
 import cookieParser from "cookie-parser";
 import {initializeRabbitMQ} from "./utils/rabbitmq.js";
 
@@ -16,7 +15,7 @@ const PORT = process.env.PORT || 8002;
 
 mongoose.connect(process.env.MONGODB_URI).then(()=>logger.info("Connected to Mongo Db")).catch((err)=>logger.error("Mongo db connection",err));
 
-const cacheClient = new Redis(process.env.REDIS_URL);
+
 
 //middleware
 app.use(cors());
@@ -31,10 +30,7 @@ app.use((req,res,next)=>{
 })
 
 
-app.use("/api/problem",(req,res,next)=>{
-    req.cacheClient = cacheClient;
-    next();
-},problemRouter);
+app.use("/api/problem",problemRouter);
 
 app.use(errorHandler);
 
