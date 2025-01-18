@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema({
     user:{
-        type:mongo.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true,
     },
@@ -19,7 +19,7 @@ const reviewSchema = new mongoose.Schema({
         type:String,
         enum:["easy","medium","hard"],
     },
-},{timestamps:ture});
+},{timestamps:true});
 
 
 const Review = mongoose.model("Review",reviewSchema);

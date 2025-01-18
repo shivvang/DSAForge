@@ -2,6 +2,7 @@ import Review from "../models/Review.model.js";
 import { reviewQueue } from "../queue/bullmq.js";
 import logger from "../utils/logger.js";
 import Joi  from "joi";
+import { sendMail } from "../utils/mailer.js";
 
 const getReviewTime = (difficulty) => {
     const daysMap = { easy: 3, medium: 7, hard: 15 };
@@ -12,8 +13,8 @@ const getReviewTime = (difficulty) => {
 export const setReview = async (req, res) => {
     logger.info("Set Review endpoint hit.");
     try {
-        const { userId } = req.user;
-        const {problemId} = req.params;
+        const  userId  = req.user;
+        const problemId = req.params.problemId;
 
         if (!userId) {
             logger.warn("Missing user ID in request.");
@@ -51,14 +52,15 @@ export const setReview = async (req, res) => {
         }
         const { difficulty } = value;
 
-        const delay  = getReviewTime(difficulty);
+        const reviewTime = getReviewTime(difficulty);
+        const delay = reviewTime.getTime() - Date.now();
+
+        const jobData = { userId, problemId }; 
 
         // Add the review job to the queue with the delay
-        await reviewQueue.add("reviewReminder", {
-            userId,
-            problemId,
-            difficulty,
-        }, {
+        await reviewQueue.add("reviewReminder", 
+            jobData, {
+            jobId: `${userId}-${problemId}`,
             delay: delay, // Delay in milliseconds
             removeOnComplete: true,
             removeOnFail: true,
@@ -87,5 +89,25 @@ export const setReview = async (req, res) => {
             success: false,
             message: "An error occurred while setting the review.",
         });
+    }
+};
+
+export const sendTestEmail = async (req, res) => {
+    logger.info("Send email function test hit.");
+    try {
+        const { email } = req.query;
+
+        if (!email) {
+            return res.status(400).json({ success: false, message: "Email is required." });
+        }
+
+        const body = "<h1>Hey, just checking if this works!</h1>";
+        await sendMail(email, body);
+
+        logger.info("Email sent successfully.");
+        return res.status(200).json({ success: true, message: "Email sent successfully!" });
+    } catch (error) {
+        logger.error("Error sending email:", error);
+        return res.status(500).json({ success: false, message: "An error occurred while sending the email." });
     }
 };

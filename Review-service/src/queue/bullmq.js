@@ -1,11 +1,15 @@
 import Redis from "ioredis";
-import { Queue, Worker } from "bullmq";
+import { Queue} from "bullmq";
 
 const cacheClient = new Redis(process.env.REDIS_URL);
 
 // Create a queue named "reviewQueue"
 const reviewQueue = new Queue("reviewQueue", {
-    connection: cacheClient,
+    connection: {
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
+        password: process.env.REDIS_PASSWORD
+    }
 });
 
 export { reviewQueue };

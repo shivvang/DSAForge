@@ -16,9 +16,9 @@ const authenticatedRequest = (req,res,next)=>{
         });
     }
 
-    req.body.user = userId; 
+    req.user = userId; 
 
-    logger.info("User authenticated for problem routes");
+    logger.info("User authenticated for Review routes");
 
     next();
 }

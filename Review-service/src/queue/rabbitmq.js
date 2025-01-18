@@ -1,5 +1,5 @@
 import amqlib from "amqplib";
-import logger from "./logger.js";
+import logger from "../utils/logger.js";
 
 
 let rabbitMQConnection = null;

@@ -178,7 +178,18 @@ app.use("/v1/problem",validatetoken,proxy(process.env.PROBLEM_SERVICE_URL,{
 
 
 //review service proxy
-
+app.use("/v1/reviews",validatetoken,proxy(process.env.REVIEW_SERVICE_URL,{
+    ...proxyOptions,
+    proxyReqOptDecorator:(proxyReqOpts,srcReq)=>{
+        proxyReqOpts.headers["Content-Type"] = "application/json",
+        proxyReqOpts.headers["x-user-id"] = srcReq.user.userId
+        return proxyReqOpts;
+    },
+    userResDecorator:(proxyRes,proxyResData,userReq,userRes)=>{
+        logger.info(`Response received from Review services : ${proxyRes.statusCode}`)
+        return proxyResData;
+    }
+}))
 
 app.use(errorHandler);
 

@@ -2,10 +2,11 @@
   "name": "review-service",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "node src/server.js & node src/queue/worker.js",
+    "dev": "nodemon src/server.js & node src/queue/worker.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.5",
+    "nodemailer": "^6.9.16",
     "winston": "^3.17.0"
   }
 }

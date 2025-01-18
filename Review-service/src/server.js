@@ -6,7 +6,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import logger from "./utils/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
-import { initializeRabbitMQ } from "./utils/rabbitmq.js";
+import { initializeRabbitMQ } from "./queue/rabbitmq.js";
 import ReviewRouter from "./routes/Review.router.js";
 
 
