@@ -21,7 +21,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(cookieparser());
-
+ 
 // rateLimit is a function from a library like express-rate-limit, used to limit the number of requests that a client (identified by IP) 
 // can make to an API within a certain time window.
 

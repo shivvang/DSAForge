@@ -138,3 +138,13 @@ npm start
 - Optimized database design with MongoDB.  
 - Logging with **Winston**.  
 
+Why DSAForge Was Discontinued?
+DSAForge was originally planned as a microservices-based system, but after development, it became clear that microservices were unnecessary for this use case. The project suffered from design flaws, unnecessary complexity, and a lack of clear separation of concerns.
+
+However, the process was highly educational. Key takeaways include:
+
+Understanding Microservices vs. Monoliths → Not every project benefits from microservices.
+Messaging Systems → Learned RabbitMQ for event-driven communication and BullMQ for job scheduling.
+Efficient Caching → Used Redis for performance optimization.
+MongoDB Change Streams → Explored real-time data updates.
+This failure reinforced the importance of choosing the right architecture for the problem at hand.
